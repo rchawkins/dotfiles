@@ -6,6 +6,7 @@
 (add-to-list 'load-path "~/.emacs.d")
 
 (load "modules/bindings")
+(load "modules/fonts")
 (load "modules/global")
 (load "modules/ido")
 (load "modules/org")
