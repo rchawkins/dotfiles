@@ -31,13 +31,10 @@
 ;; Trailing whitespace is unnecessary
 (add-hook 'before-save-hook (lambda () (whitespace-cleanup)))
 
-;; turn off toolbar and menubar
-(tool-bar-mode -1)
-(menu-bar-mode -1)
-
-;; no scroll bars
-(when (fboundp 'toggle-scroll-bar)
-  (toggle-scroll-bar -1))
+;; turn off toolbar, menubar, scroll bar
+(if (fboundp 'menu-bar-mode) (menu-bar-mode -1))
+(if (fboundp 'tool-bar-mode) (tool-bar-mode -1))
+(if (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
 
 ;; no tabs
 (setq-default indent-tabs-mode nil)
