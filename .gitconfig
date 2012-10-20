@@ -1,0 +1,11 @@
+[user]
+    name = rchawkins
+    email = rchawkins@gmail.com
+
+[alias]
+    graph = log --branches --pretty=short --decorate --graph
+
+[color]
+    branch = auto
+    diff = auto
+    status = auto
