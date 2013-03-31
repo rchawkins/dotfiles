@@ -1,11 +1,36 @@
 [user]
-    name = rchawkins
-    email = rchawkins@gmail.com
+  name = Chris Hawkins
+  email = rc.hawkins@gmail.com
 
-[alias]
-    graph = log --branches --pretty=short --decorate --graph
+[core]
+filemode = false
+whitespace=-indent-with-non-tab,trailing-space,cr-at-eol,tab-in-indent
+
+[push]
+  default = current
 
 [color]
-    branch = auto
-    diff = auto
-    status = auto
+  ui = true
+
+[color "diff"]
+whitespace = red reverse
+
+[diff]
+    noprefix = true
+
+[pretty]
+  hist      = "%C(yellow)%h %C(green)(%ad)%C(bold red)%d %C(reset)%C(red)[%an]%C(reset) %s"
+
+[alias]
+  co        = checkout
+  st        = status --short --branch
+
+  hist      = log --graph --pretty=hist --date=relative --date-order
+
+  h         = !git hist -10
+  hh        = !git hist -30
+
+  longhist  = log --pretty=hist --decorate --stat --date=relative
+  lh        = !git longhist -10
+
+  filelog   = log -u
