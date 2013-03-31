@@ -24,6 +24,8 @@ whitespace = red reverse
 [alias]
   co        = checkout
   st        = status --short --branch
+  b         = !git branch -vv
+  ba        = !git branch -avv
 
   hist      = log --graph --pretty=hist --date=relative --date-order
 
