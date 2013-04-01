@@ -19,7 +19,7 @@ whitespace = red reverse
     noprefix = true
 
 [pretty]
-  hist      = "%C(yellow)%h %C(green)(%ad)%C(bold red)%d %C(reset)%C(red)[%an]%C(reset) %s"
+  hist      = "%C(yellow)%h %C(green)(%ad)%C(bold red)%d %C(reset)%C(blue)[%an]%C(reset) %s"
 
 [alias]
   co        = checkout
@@ -29,8 +29,8 @@ whitespace = red reverse
 
   hist      = log --graph --pretty=hist --date=relative --date-order
 
-  h         = !git hist -10
-  hh        = !git hist -30
+  h         = !git --no-pager hist -10
+  hh        = !git --no-pager hist -30
 
   longhist  = log --pretty=hist --decorate --stat --date=relative
   lh        = !git longhist -10
