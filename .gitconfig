@@ -19,13 +19,16 @@ whitespace = red reverse
     noprefix = true
 
 [pretty]
-  hist      = "%C(yellow)%h %C(green)(%ad)%C(bold red)%d %C(reset)%C(blue)[%an]%C(reset) %s"
+  hist      = "%C(yellow)%h %C(green)(%ad)%C(blue)[%an]%C(red)%d %C(reset)% %s"
 
 [alias]
   co        = checkout
   st        = status --short --branch
   b         = !git branch -vv
   ba        = !git branch -avv
+
+  diffh     = diff HEAD
+  diffs     = diff --staged
 
   hist      = log --graph --pretty=hist --date=relative --date-order
 
