@@ -27,6 +27,8 @@ whitespace = red reverse
   b         = !git branch -vv
   ba        = !git branch -avv
 
+  unstage   = reset HEAD
+
   diffh     = diff HEAD
   diffs     = diff --staged
 
