@@ -2,6 +2,9 @@
   name = Chris Hawkins
   email = rc.hawkins@gmail.com
 
+[include]
+  path = ~/.gitconfig.local
+
 [core]
 filemode = false
 whitespace=-indent-with-non-tab,trailing-space,cr-at-eol,tab-in-indent
