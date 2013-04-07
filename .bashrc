@@ -63,6 +63,10 @@ else
     alias ls='ls --color=auto'
 fi
 
+alias ll='ls -al'
+
+alias h='history'
+
 alias grep='grep --color=auto'
 alias fgrep='fgrep --color=auto'
 alias egrep='egrep --color=auto'
