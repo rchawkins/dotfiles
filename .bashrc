@@ -43,7 +43,7 @@ prompt() {
     color_user=${color_blue}
     [[ $UID == 0 ]] && color_user=${color_red}
 
-    PS1="${color_grey}[ \t ][ ${color_user}\u${color_dgrey}@${color_grey}\h${color_dgrey}:${color_yellow}${color_yellow}\w ${color_grey}]\n${color_byellow}\$ ${color_reset} "
+    PS1="${color_grey}[ \t ][ ${color_user}\u${color_dgrey}@${color_grey}\h${color_dgrey}:${color_yellow}${color_yellow}\w ${color_grey}]\n${color_byellow}\$${color_reset} "
 }
 prompt_off() {
     PS1='\u@\h\$ '
