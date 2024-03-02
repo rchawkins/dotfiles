@@ -1,16 +1,24 @@
-#/bin/sh
-
-for STYLE in 0 1 4 7; do
-  for FG in 30 31 32 33 34 35 36 37; do
-    for BG in 40 41 42 43 44 45 46 47; do
-      CTRL="\033[${STYLE};${FG};${BG}m"
-      echo -en "${CTRL}"
-      echo -n "${STYLE};${FG};${BG}"
-      echo -en "\033[0m"
-    done
-    echo
-  done
-  echo
+#!/bin/bash
+#
+# generates an 8 bit color table (256 colors) for reference,
+# using the ANSI CSI+SGR \033[48;5;${val}m for background and
+# \033[38;5;${val}m for text (see "ANSI Code" on Wikipedia)
+#
+echo -en "\n   +  "
+for i in {0..35}; do
+printf "%2b " $i
 done
-# Reset
-echo -e "\033[0m"
+printf "\n\n %3b  " 0
+for i in {0..15}; do
+echo -en "\033[48;5;${i}m  \033[m "
+done
+#for i in 16 52 88 124 160 196 232; do
+for i in {0..6}; do
+let "i = i*36 +16"
+printf "\n\n %3b  " $i
+for j in {0..35}; do
+let "val = i+j"
+echo -en "\033[48;5;${val}m  \033[m "
+done
+done
+echo -e "\n"

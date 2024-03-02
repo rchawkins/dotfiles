@@ -1,7 +1,3 @@
-[user]
-  name = Chris Hawkins
-  email = rc.hawkins@gmail.com
-
 [include]
   path = ~/.gitconfig.local
 
@@ -20,12 +16,18 @@ whitespace = red reverse
 
 [diff]
     noprefix = true
+    renames = true
+    renameLimit = 2000
 
 [pretty]
-  hist      = "%C(yellow)%h %C(green)(%ad)%C(blue)[%an]%C(red)%d %C(reset)% %s"
+    hist      = "%C(yellow)%h %C(green)(%ad)%C(blue)[%an]%C(red)%d %C(reset)% %s"
+
+[merge]
+    conflictstyle = diff3
 
 [alias]
   co        = checkout
+  ci        = commit
   st        = status --short --branch
   b         = !git branch -vv
   ba        = !git branch -avv
