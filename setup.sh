@@ -27,3 +27,5 @@ backup_and_link .bashrc
 backup_and_link .emacs.d
 backup_and_link .gitconfig
 backup_and_link .zprofile
+backup_and_link .zshrc
+
