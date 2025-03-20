@@ -10,7 +10,7 @@ function backup_and_link() {
   source="${script_dir}/${filename}"
 
   if [ "$(readlink "${target}")" = "${source}" ]; then
-    echo "${filename} already linked"
+    echo "${filename} already linked at ${target}"
     return
   fi
 
