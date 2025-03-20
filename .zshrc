@@ -16,6 +16,12 @@ setopt HIST_IGNORE_SPACE         # Don't record an entry starting with a space.
 # enable comments during an interactive session
 setopt interactivecomments
 
+# include additional special characters as word bounderies
+ WORDCHARS='*?_-[]~='
+
+# use Ctrl-k for kill-word instead of kill-line; I find kill-word super useful but the alt-d binding sucks
+bindkey '^k' kill-word
+
 ## prompt
 # see vcs_info examples here: https://sourceforge.net/p/zsh/code/ci/master/tree/Misc/vcs_info-examples
 autoload -Uz vcs_info
@@ -55,12 +61,24 @@ alias cd.....='cd ../../../..'
 alias cd......='cd ../../../../..'
 
 alias vi='nvim'
+alias vim='nvim'
+
+alias uvr='uv run'
 
 ## golang settings
 export GOPATH=$HOME/go
 export GOROOT="$(brew --prefix golang)/libexec"
 export PATH="$PATH:${GOPATH}/bin:${GOROOT}/bin"
 
-## pyenv
-eval "$(pyenv init -)"
+eval "$(uv generate-shell-completion zsh)"
+eval "$(uvx --generate-shell-completion zsh)"
 
+# workaround for uv file tab-complete; see https://github.com/astral-sh/uv/issues/8432
+_uv_run_mod() {
+    if [[ "$words[2]" == "run" && "$words[CURRENT]" != -* ]]; then
+        _arguments '*:filename:_files'
+    else
+        _uv "$@"
+    fi
+}
+compdef _uv_run_mod uv

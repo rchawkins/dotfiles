@@ -108,3 +108,4 @@ fi
 if [[ -e "$HOME/.bashrc.local" ]]; then
     source "$HOME/.bashrc.local"
 fi
+. "$HOME/.cargo/env"

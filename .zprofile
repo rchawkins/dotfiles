@@ -4,5 +4,3 @@ if [[ $(uname) == "Darwin" ]]; then
   fi
 fi
 
-eval "$(pyenv init --path)"
-
