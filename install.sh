@@ -1,21 +1,22 @@
 #!/bin/bash
 # install.sh - script to install dotfiles
 
+set -eu -o pipefail
+
 SCRIPT_DIR=$(dirname "${BASH_SOURCE[0]}")
 DOTFILES_DIR=$(cd "${SCRIPT_DIR}" && pwd)
 BACKUP_DIR="${HOME}/.dotfiles_backup/$(date +%Y%m%d_%H%M%S)"
 
-# Create necessary directories
 echo "Creating directories..."
 mkdir -p "${HOME}/.config/"
 mkdir -p "${HOME}/.local/"
 
-# Backup existing dotfiles
+# Backup existing file 
 backup_file() {
     local file="$1"
-    local backup_path="${BACKUP_DIR}/$(dirname "${file#$HOME/}")"
-    
-    if [ -e "${file}" ]; then
+    local backup_path="${BACKUP_DIR}/$(dirname "${file#${HOME}/}")"
+
+    if [[ -e "${file}" ]]; then
         echo "Backing up ${file}"
         mkdir -p "${backup_path}"
         cp -RL "${file}" "${backup_path}"
