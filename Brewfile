@@ -17,3 +17,5 @@ brew "tree"
 brew "wget"
 brew "xz"
 
+cask "git-credential-manager"
+
