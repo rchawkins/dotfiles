@@ -26,6 +26,13 @@ bindkey '^k' kill-word
 # see vcs_info examples here: https://sourceforge.net/p/zsh/code/ci/master/tree/Misc/vcs_info-examples
 autoload -Uz vcs_info
 
+prompt_remote_info() {
+  # Check if SSH connection exists
+  if [[ -n "${SSH_CONNECTION}" ]]; then
+    echo "%n@%m:"  # Show user@hostname when remote
+  fi
+}
+
 zstyle ':vcs_info:*' enable git
 
 # enables checking for unstaged (%u) and staged (%c); can be slow on large repos
@@ -44,7 +51,7 @@ zstyle ':vcs_info:git:*' formats '[%F{228}%b%u%c%%f]'
 zstyle ':vcs_info:git:*' actionformats '%F{75}[%b|%a%u%c%f]'
 
 setopt prompt_subst
-PROMPT='${vcs_info_msg_0_} %~ %F{14}>%f '
+PROMPT='${vcs_info_msg_0_} $(prompt_remote_info)%~ %F{14}>%f '
 
 ## ls colors
 export CLICOLOR=1
@@ -65,6 +72,8 @@ alias vim='nvim'
 
 alias uvr='uv run'
 
+alias k='kubectl'
+
 ## golang settings
 export GOPATH=$HOME/go
 export GOROOT="$(brew --prefix golang)/libexec"
@@ -82,3 +91,7 @@ _uv_run_mod() {
     fi
 }
 compdef _uv_run_mod uv
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion

@@ -7,9 +7,18 @@ SCRIPT_DIR=$(dirname "${BASH_SOURCE[0]}")
 DOTFILES_DIR=$(cd "${SCRIPT_DIR}" && pwd)
 BACKUP_DIR="${HOME}/.dotfiles_backup/$(date +%Y%m%d_%H%M%S)"
 
+# Detect OS
+OS="unknown"
+if [[ "$OSTYPE" == "darwin"* ]]; then
+    OS="macos"
+elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
+    OS="linux"
+fi
+echo "Detected OS: ${OS}"
+
 echo "Creating directories..."
 mkdir -p "${HOME}/.config/"
-mkdir -p "${HOME}/.local/"
+mkdir -p "${HOME}/.local/bin"
 
 # Backup existing file 
 backup_file() {
@@ -45,8 +54,16 @@ install_file() {
     ln -sf "${src}" "${dest}"
 }
 
-echo "Installing brew programs"
-brew bundle --file=${DOTFILES_DIR}/Brewfile
+# Install Homebrew packages on macOS
+if [[ "$OS" == "macos" ]]; then
+    if command -v brew >/dev/null 2>&1; then
+        echo "Installing brew programs"
+        brew bundle --file=${DOTFILES_DIR}/Brewfile
+    else
+        echo "Homebrew is not installed. Skipping brew bundle."
+        echo "To install Homebrew, visit: https://brew.sh"
+    fi
+fi
 
 echo "Installing dotfiles"
 
@@ -75,8 +92,16 @@ install_file "${DOTFILES_DIR}/.config/nvim/lua/core/options.lua" "${HOME}/.confi
 install_file "${DOTFILES_DIR}/.config/nvim/lua/plugins/init.lua" "${HOME}/.config/nvim/lua/plugins/"
 
 # ghostty
-mkdir -p "${HOME}/.config/ghostty"
-install_file "${DOTFILES_DIR}/.config/ghostty/config" "${HOME}/.config/ghostty/"
+if [[ "$OS" == "macos" ]]; then
+    mkdir -p "${HOME}/.config/ghostty"
+    install_file "${DOTFILES_DIR}/.config/ghostty/config" "${HOME}/.config/ghostty/"
+fi
+
+# Linux-specific configurations
+if [[ "$OS" == "linux" ]]; then
+    # Add Linux-specific configurations here if needed
+    echo "Setting up Linux-specific configurations..."
+fi
 
 echo ""
 echo "Dotfiles installation complete!"
