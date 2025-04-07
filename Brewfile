@@ -1,11 +1,14 @@
 # Run 'brew bundle --file <FILENAME>' to install these packages
 
+
 brew "btop"
 brew "coreutils"
 brew "fzf"
 brew "gh"
 brew "git"
 brew "jq"
+brew "kubectl"
+brew "kubectx"
 brew "llm"
 brew "nvim"
 brew "podman"
