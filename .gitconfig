@@ -46,8 +46,12 @@ whitespace = red reverse
   lh        = !git longhist -10
 
   filelog   = log -u
+
 [credential]
 	helper = /usr/local/share/gcm-core/git-credential-manager
 
 [credential "https://dev.azure.com"]
 	useHttpPath = true
+
+[init]
+	defaultBranch = main

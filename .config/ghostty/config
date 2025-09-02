@@ -1,2 +1,2 @@
 copy-on-select = clipboard
-
+term = xterm-256color

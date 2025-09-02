@@ -74,6 +74,7 @@ install_file "${DOTFILES_DIR}/bin/colors.sh" "${HOME}/.local/bin/"
 install_file "${DOTFILES_DIR}/.zshrc" "${HOME}/.zshrc"
 install_file "${DOTFILES_DIR}/.zprofile" "${HOME}/.zprofile"
 install_file "${DOTFILES_DIR}/.zshenv" "${HOME}/.zshenv"
+install_file "${DOTFILES_DIR}/.kubectl_aliases" "${HOME}/.kubectl_aliases"
 
 # bash
 install_file "${DOTFILES_DIR}/.bash_profile" "${HOME}/.bash_profile"

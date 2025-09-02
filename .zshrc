@@ -1,7 +1,12 @@
+typeset -U PATH
+
 autoload -U compinit && compinit
 autoload -U colors && colors
 
-## zsh
+##########
+## History
+##########
+
 export HISTFILE="$HOME/.zsh_history"
 export HISTSIZE=1000000
 export SAVEHIST=1000000
@@ -22,44 +27,68 @@ setopt interactivecomments
 # use Ctrl-k for kill-word instead of kill-line; I find kill-word super useful but the alt-d binding sucks
 bindkey '^k' kill-word
 
-## prompt
+##########
+## prompt 
+##########
+
 # see vcs_info examples here: https://sourceforge.net/p/zsh/code/ci/master/tree/Misc/vcs_info-examples
 autoload -Uz vcs_info
+setopt prompt_subst
 
 prompt_remote_info() {
   # Check if SSH connection exists
   if [[ -n "${SSH_CONNECTION}" ]]; then
-    echo "%n@%m:"  # Show user@hostname when remote
+    echo "%F{blue}%n%f@%F{blue}%m%f:"  # Show user@hostname when remote
   fi
 }
 
 zstyle ':vcs_info:*' enable git
 
-# enables checking for unstaged (%u) and staged (%c); can be slow on large repos
-# zstyle ':vcs_info:*' check-for-changes true
+# identify untracked files (%m)
+# see https://stackoverflow.com/questions/49744179/zsh-vcs-info-how-to-indicate-if-there-are-untracked-files-in-git
++vi-git-untracked() {
+  if [[ $(git rev-parse --is-inside-work-tree 2> /dev/null) == 'true' ]] && \
+     git status --porcelain | grep -m 1 '^??' &>/dev/null
+  then
+    hook_com[misc]='%B%F{red}?%f'
+  fi
+}
+
+zstyle ':vcs_info:git*+set-message:*' hooks git-untracked
 
 # faster than 'check-for-changes', but only sets staged changes (%c)
-zstyle ':vcs_info:git:*' check-for-staged-changes true
+# zstyle ':vcs_info:git:*' check-for-staged-changes true
+
+# enables checking for unstaged (%u) and staged (%c); can be slow on large repos
+zstyle ':vcs_info:*' check-for-changes true
 
 # Set custom strings for (un)staged changes
-zstyle ':vcs_info:git:*' unstagedstr '%F{red}*%f'
-zstyle ':vcs_info:git:*' stagedstr '%F{green}+%f'
+zstyle ':vcs_info:git:*' unstagedstr '%B%F{red}!%f'
+zstyle ':vcs_info:git:*' stagedstr '%B%F{40}+%f'
+
+zstyle ':vcs_info:git:*' formats '[%F{228}%b%u%c%m%%f]'
+zstyle ':vcs_info:git:*' actionformats '%F{75}[%b|%a%u%c%m%f]'
 
 precmd() { vcs_info }
 
-zstyle ':vcs_info:git:*' formats '[%F{228}%b%u%c%%f]'
-zstyle ':vcs_info:git:*' actionformats '%F{75}[%b|%a%u%c%f]'
-
-setopt prompt_subst
-PROMPT='${vcs_info_msg_0_} $(prompt_remote_info)%~ %F{14}>%f '
+#PROMPT='${vcs_info_msg_0_} $(prompt_remote_info)%~ %F{14}>%f '
+PROMPT='$(prompt_remote_info)%~ ${vcs_info_msg_0_}%F{14} >%f '
 
 ## ls colors
 export CLICOLOR=1
 export LSCOLORS="Gxfxcxdxbxegedabagacad"
 
+##########
 ## aliases
+##########
+
+# edit/source .zshrc
+alias ez='vim ~/.zshrc'
+alias sz='source ~/.zshrc'
+
 alias ll='ls -alh'
 alias la='ls -A'
+alias lls='ls -lh --sort --reverse'
 
 alias cd..='cd ..'
 alias cd...='cd ../..'
@@ -72,7 +101,21 @@ alias vim='nvim'
 
 alias uvr='uv run'
 
-alias k='kubectl'
+# k8s aliases (see https://github.com/ahmetb/kubectl-aliases)
+[ -f ~/.kubectl_aliases ] && source ~/.kubectl_aliases
+
+
+alias gs='git status --short --branch'
+alias gco='git checkout'
+alias gaa='git add -A'
+alias gd='git diff'
+alias gdc='git diff --cached'
+alias gup='git push'
+
+
+##############
+# Environment
+##############
 
 ## golang settings
 export GOPATH=$HOME/go
@@ -95,3 +138,12 @@ compdef _uv_run_mod uv
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+# Load additional config files from ~/.zsh.d/
+local CONFIG_DIR="$HOME/.zsh.d"
+if [ -d "$CONFIG_DIR" ]; then
+    for config_file in "$CONFIG_DIR"/*; do
+        [ -r "$config_file" ] && source "$config_file"
+    done
+fi
+
