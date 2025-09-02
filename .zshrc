@@ -66,13 +66,13 @@ zstyle ':vcs_info:*' check-for-changes true
 zstyle ':vcs_info:git:*' unstagedstr '%B%F{red}!%f'
 zstyle ':vcs_info:git:*' stagedstr '%B%F{40}+%f'
 
-zstyle ':vcs_info:git:*' formats '[%F{228}%b%u%c%m%%f]'
+zstyle ':vcs_info:git:*' formats '[%F{228}%b%u%c%m%%f] '
 zstyle ':vcs_info:git:*' actionformats '%F{75}[%b|%a%u%c%m%f]'
 
 precmd() { vcs_info }
 
 #PROMPT='${vcs_info_msg_0_} $(prompt_remote_info)%~ %F{14}>%f '
-PROMPT='$(prompt_remote_info)%~ ${vcs_info_msg_0_}%F{14} >%f '
+PROMPT='$(prompt_remote_info)%~ ${vcs_info_msg_0_}%F{14}>%f '
 
 ## ls colors
 export CLICOLOR=1
@@ -104,14 +104,12 @@ alias uvr='uv run'
 # k8s aliases (see https://github.com/ahmetb/kubectl-aliases)
 [ -f ~/.kubectl_aliases ] && source ~/.kubectl_aliases
 
-
 alias gs='git status --short --branch'
 alias gco='git checkout'
 alias gaa='git add -A'
 alias gd='git diff'
-alias gdc='git diff --cached'
+alias gds='git diff --staged'
 alias gup='git push'
-
 
 ##############
 # Environment
